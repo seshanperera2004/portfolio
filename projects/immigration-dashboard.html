@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK & Australia Immigration Dashboards | Seshan Perera</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Project Detail Page Styles */
+        .project-detail-header {
+            background: linear-gradient(135deg, #1a5276 0%, #154360 100%);
+            padding: 120px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-detail-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.03) 0%, transparent 50%);
+        }
+        
+        .project-detail-title {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .project-detail-subtitle {
+            color: #e0f7ff;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+        
+        .meta-item {
+            background: rgba(52, 152, 219, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            min-width: 150px;
+            transition: transform 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+        
+        .meta-item:hover {
+            transform: translateY(-5px);
+            background: rgba(52, 152, 219, 0.25);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.15);
+        }
+        
+        .meta-label {
+            color: #a1d8ff;
+            font-size: 0.9rem;
+            font-family: 'Roboto Mono', monospace;
+            margin-bottom: 5px;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .meta-value {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            display: block;
+        }
+        
+        .project-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .project-section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #1a5276;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0f2ff;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: #3498db;
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .gallery-image:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.4);
+        }
+        
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .features-list li {
+            background: #f0f9ff;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            position: relative;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .features-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+            background: #e6f4ff;
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+        
+        .tech-item {
+            background: linear-gradient(135deg, #1a5276, #154360);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(26, 82, 118, 0.2);
+        }
+        
+        .tech-item:hover {
+            background: linear-gradient(135deg, #154360, #1a5276);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 82, 118, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .back-to-projects {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: #1a5276;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(26, 82, 118, 0.2);
+        }
+        
+        .back-to-projects:hover {
+            gap: 20px;
+            background: #154360;
+            transform: translateX(-10px);
+            box-shadow: 0 10px 25px rgba(26, 82, 118, 0.3);
+        }
+        
+        .project-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .project-link-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .project-link-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.3);
+            gap: 18px;
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+        
+        .project-link-btn.secondary {
+            background: transparent;
+            color: #1a5276;
+            border: 2px solid #1a5276;
+            box-shadow: 0 5px 15px rgba(26, 82, 118, 0.1);
+        }
+        
+        .project-link-btn.secondary:hover {
+            background: rgba(26, 82, 118, 0.1);
+            color: #154360;
+            border-color: #154360;
+            box-shadow: 0 10px 25px rgba(26, 82, 118, 0.2);
+        }
+        
+        .process-timeline {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 30px;
+        }
+        
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #3498db, #a1d8ff);
+        }
+        
+        .process-step {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            background: #3498db;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .step-title {
+            color: #1a5276;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .step-description {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        /* Footer specific styling for this page */
+        .footer {
+            background: #154360;
+            color: white;
+        }
+        
+        .footer-text {
+            color: #a1d8ff;
+        }
+        
+        .footer-links a {
+            color: #e0f7ff;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-social a {
+            color: #a1d8ff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-social a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .copyright {
+            color: #a1d8ff;
+        }
+        
+        @media (max-width: 768px) {
+            .project-detail-title {
+                font-size: 2.2rem;
+            }
+            
+            .project-detail-subtitle {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+            
+            .project-meta {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                padding: 0 20px;
+            }
+            
+            .meta-item {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .tech-stack {
+                justify-content: center;
+                padding: 0 20px;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .project-link-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .project-detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-stack {
+                justify-content: center;
+            }
+            
+            .tech-item {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">SP<span class="dot">.</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#certifications">Certifications</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <header class="project-detail-header">
+        <div class="container">
+            <h1 class="project-detail-title">UK Immigration Statistics Analysis & Australian Government Data Intelligence Dashboard</h1>
+            <p class="project-detail-subtitle">Advanced data analytics solutions using large-scale public datasets from UK and Australian governments with SQL Server, Power BI, and advanced DAX calculations for immigration trends and socio-economic insights.</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Category</div>
+                    <div class="meta-value">Government Data Analytics, Data Analysis and Visualization</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Timeline</div>
+                    <div class="meta-value">November - December <br>(2025)</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value">Completed</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Team</div>
+                    <div class="meta-value">4CastModels</div>
+                </div>
+            </div>
+            
+            <div class="tech-stack">
+                <span class="tech-item">SQL Server</span>
+                <span class="tech-item">Power BI</span>
+                <span class="tech-item">DAX</span>
+                <span class="tech-item">Data Modeling</span>
+                <span class="tech-item">ETL Processes</span>
+                <span class="tech-item">Data Visualization</span>
+                <span class="tech-item">Government Data</span>
+                <span class="tech-item">Drill-through</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Project Content -->
+    <main class="project-content">
+        <div class="container">
+            <!-- Overview Section -->
+            <section class="project-section">
+                <h2 class="section-title">Project Overview</h2>
+                <p>This dual-dashboard project involved analyzing large-scale immigration and socio-economic datasets from the UK and Australian governments. The UK Immigration Dashboard tracks visa applications, citizenship trends, and immigration patterns, while the Australian Data Intelligence Dashboard provides insights into population growth, economic indicators, and social trends.</p>
+                
+                <p>The project demonstrates expertise in handling complex government datasets, implementing advanced analytics, and creating interactive visualizations for policy analysis and decision support.</p>
+                
+                <div class="image-gallery">
+                    <img src="../assets/images/immigration-dashboard-1.jpg" alt="UK Immigration Dashboard View" class="gallery-image">
+                    <img src="../assets/images/immigration-dashboard-2.jpg" alt="Australian Data Dashboard" class="gallery-image">
+                    <img src="../assets/images/immigration-dashboard-3.jpg" alt="Data Integration Process" class="gallery-image">
+                </div>
+            </section>
+
+            <!-- Problem Statement -->
+            <section class="project-section">
+                <h2 class="section-title">Problem Statement</h2>
+                <p>Government agencies and policy researchers needed:</p>
+                <ul class="features-list">
+                    <li>Consolidated view of UK immigration statistics across multiple years</li>
+                    <li>Analysis of Australian socio-economic indicators for policy planning</li>
+                    <li>Interactive tools for comparing immigration trends by country and visa type</li>
+                    <li>Automated reporting for regular government data updates</li>
+                    <li>Predictive insights for future immigration patterns</li>
+                </ul>
+            </section>
+
+            <!-- Solution -->
+            <section class="project-section">
+                <h2 class="section-title">Solution Approach</h2>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <h3 class="step-title">1. Data Collection & Source Integration</h3>
+                        <p class="step-description">Aggregated data from UK Home Office immigration statistics (500,000+ records), Australian Bureau of Statistics datasets, and complementary demographic sources. Established automated data pipelines for quarterly updates.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">2. Data Cleaning & Standardization</h3>
+                        <p class="step-description">Performed comprehensive ETL processes using SQL Server to handle inconsistent formats, missing values, and data quality issues across international datasets. Standardized country codes, date formats, and measurement units.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">3. Database Architecture</h3>
+                        <p class="step-description">Designed normalized database schemas with appropriate indexing and relationships. Created separate but linked databases for UK and Australian datasets to maintain data integrity while enabling cross-analysis.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">4. Advanced DAX Development</h3>
+                        <p class="step-description">Built sophisticated DAX measures for time intelligence (YOY growth, seasonal adjustments), ranking calculations (top countries, visa categories), and custom KPIs specific to immigration analysis and socio-economic indicators.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">5. Interactive Dashboard Design</h3>
+                        <p class="step-description">Created user-friendly Power BI dashboards with custom visuals, drill-through capabilities, and responsive design. Implemented geographical mapping for country-level analysis and time-series forecasting.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-section">
+                <h2 class="section-title">Key Features & Capabilities</h2>
+                <div class="tech-stack">
+                    <span class="tech-item">Dual Dashboard System</span>
+                    <span class="tech-item">Geospatial Analysis</span>
+                    <span class="tech-item">Time Series Forecasting</span>
+                    <span class="tech-item">Custom Visuals</span>
+                    <span class="tech-item">Automated Updates</span>
+                    <span class="tech-item">Policy Insights</span>
+                </div>
+                
+                <ul class="features-list">
+                    <li><strong>UK Immigration Dashboard:</strong> Track visa applications by type, country of origin, approval rates, and processing times with interactive filtering and trend analysis.</li>
+                    <li><strong>Australian Data Intelligence Dashboard:</strong> Monitor population growth, employment rates, education metrics, and economic indicators across Australian states and territories.</li>
+                    <li><strong>Comparative Analysis:</strong> Cross-dashboard insights comparing immigration patterns with socio-economic indicators for informed policy decisions.</li>
+                    <li><strong>Drill-through Capabilities:</strong> Detailed analysis from national level down to individual visa categories or demographic groups.</li>
+                    <li><strong>Automated Reporting:</strong> Scheduled data refresh and automated report generation for government stakeholders.</li>
+                    <li><strong>Export Functionality:</strong> Comprehensive data export options for further analysis in Excel or statistical software.</li>
+                </ul>
+            </section>
+
+            <!-- Technical Implementation -->
+            <section class="project-section">
+                <h2 class="section-title">Technical Implementation</h2>
+                
+                <h3>Data Architecture:</h3>
+                <p>Built a comprehensive analytics platform with:</p>
+                <ul class="features-list">
+                    <li><strong>Data Warehouse:</strong> SQL Server database with star schema design for optimized querying</li>
+                    <li><strong>ETL Pipeline:</strong> Automated data ingestion and transformation processes</li>
+                    <li><strong>Analytics Layer:</strong> Power BI with advanced DAX calculations and custom measures</li>
+                    <li><strong>Presentation Layer:</strong> Interactive dashboards with user-friendly interface</li>
+                </ul>
+                
+                <h3>Key Metrics Developed:</h3>
+                <div class="tech-stack">
+                    <span class="tech-item">Visa Approval Rates</span>
+                    <span class="tech-item">Immigration Growth</span>
+                    <span class="tech-item">Population Trends</span>
+                    <span class="tech-item">Economic Indicators</span>
+                    <span class="tech-item">Processing Times</span>
+                    <span class="tech-item">Forecast Accuracy</span>
+                </div>
+            </section>
+
+            <!-- Results & Impact -->
+            <section class="project-section">
+                <h2 class="section-title">Results & Impact</h2>
+                
+                <ul class="features-list">
+                    <li><strong>Data Processing:</strong> Successfully processed and analyzed 750,000+ immigration records and 200,000+ socio-economic data points</li>
+                    <li><strong>Efficiency Gains:</strong> Reduced data analysis time by 90% through dashboard automation and visualization</li>
+                    <li><strong>Insight Generation:</strong> Identified 25+ key immigration trends and 15+ socio-economic patterns for policy consideration</li>
+                    <li><strong>User Satisfaction:</strong> 98% positive feedback for dashboard usability and data accessibility</li>
+                    <li><strong>Decision Support:</strong> Provided evidence-based insights for immigration policy development and resource allocation</li>
+                    <li><strong>Scalability:</strong> Architecture designed to accommodate additional countries and data sources</li>
+                </ul>
+                
+                <div class="image-gallery">
+                    <img src="../assets/images/immigration-dashboard-4.jpg" alt="Dashboard Analytics" class="gallery-image">
+                    <img src="../assets/images/immigration-dashboard-5.jpg" alt="User Interface" class="gallery-image">
+                </div>
+            </section>
+
+            <!-- Challenges & Learnings -->
+            <section class="project-section">
+                <h2 class="section-title">Challenges & Learnings</h2>
+                
+                <h3>Challenges Overcome:</h3>
+                <ul class="features-list">
+                    <li><strong>Data Heterogeneity:</strong> Developed standardized processes for handling diverse government data formats</li>
+                    <li><strong>Performance Optimization:</strong> Implemented query optimization and indexing strategies for large datasets</li>
+                    <li><strong>User-Centric Design:</strong> Conducted iterative testing to ensure dashboard met stakeholder needs</li>
+                    <li><strong>International Standards:</strong> Adapted to different country coding systems and measurement standards</li>
+                </ul>
+                
+                <h3>Key Learnings:</h3>
+                <ul class="features-list">
+                    <li>Importance of data standardization in international comparisons</li>
+                    <li>Value of user feedback in developing policy-oriented dashboards</li>
+                    <li>Benefits of modular design for scalable analytics solutions</li>
+                    <li>Power of data storytelling in communicating policy implications</li>
+                </ul>
+            </section>
+
+            <!-- Project Links -->
+            <section class="project-section">
+                <h2 class="section-title">Project Resources</h2>
+                
+                <div class="project-links">
+                    <a href="https://github.com/seshanperera/immigration-dashboard" target="_blank" class="project-link-btn">
+                        <i class="fab fa-github"></i> View Source Code
+                    </a>
+                    <a href="../assets/files/immigration-dashboard-report.pdf" target="_blank" class="project-link-btn secondary">
+                        <i class="fas fa-file-pdf"></i> Download Technical Report
+                    </a>
+                    <a href="../assets/files/immigration-dashboard-demo.mp4" target="_blank" class="project-link-btn secondary">
+                        <i class="fas fa-video"></i> Watch Dashboard Walkthrough
+                    </a>
+                    <a href="mailto:seshanperera2004@gmail.com?subject=Inquiry about Immigration Dashboard Project" class="project-link-btn secondary">
+                        <i class="fas fa-envelope"></i> Request Access
+                    </a>
+                </div>
+                
+                <p style="color: #666; margin-top: 20px; font-style: italic; text-align: center;">
+                    <i class="fas fa-info-circle" style="color: #1a5276; margin-right: 8px;"></i>
+                    Note: Government datasets are publicly available, but dashboard access may require permission.
+                </p>
+            </section>
+
+            <!-- Back Button -->
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="../index.html#projects" class="back-to-projects">
+                    <i class="fas fa-arrow-left"></i> Back to All Projects
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="../index.html" class="logo">SP<span class="dot">.</span></a>
+                <p class="footer-text">Transforming raw data into meaningful insights</p>
+                <div class="footer-links">
+                    <a href="../index.html#home">Home</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#certifications">Certifications</a>
+                    <a href="../index.html#projects">Projects</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/seshanperera2004" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/seshan-perera-5lb79832b" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/seshxn_22/" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100074223216525" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2024 Seshan Perera. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

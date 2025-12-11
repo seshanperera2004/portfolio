@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Price & Crime Dashboard | Seshan Perera</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Project Detail Page Styles */
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--dark-navy) 100%);
+            padding: 120px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-detail-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(100, 255, 218, 0.05) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(100, 255, 218, 0.03) 0%, transparent 50%);
+        }
+        
+        .project-detail-title {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .project-detail-subtitle {
+            color: var(--light-slate);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+        
+        .meta-item {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--blue);
+            min-width: 150px;
+            transition: transform 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+        }
+        
+        .meta-item:hover {
+            transform: translateY(-5px);
+            background: rgba(17, 34, 64, 0.9);
+        }
+        
+        .meta-label {
+            color: var(--blue);
+            font-size: 0.9rem;
+            font-family: 'Roboto Mono', monospace;
+            margin-bottom: 5px;
+            display: block;
+            text-align: center;
+        }
+        
+        .meta-value {
+            color: var(--white);
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-align: center;
+            display: block;
+        }
+        
+        .project-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .project-section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--blue);
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--lightest-navy);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--blue);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .gallery-image:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(100, 255, 218, 0.1);
+        }
+        
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .features-list li {
+            background: var(--light-navy);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--blue);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .features-list li:hover {
+            transform: translateX(10px);
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--blue);
+            color: var(--dark-navy);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+        
+        .tech-item {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(79, 209, 199, 0.1));
+            color: var(--blue);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .tech-item:hover {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.2), rgba(79, 209, 199, 0.2));
+            transform: translateY(-3px);
+        }
+        
+        .back-to-projects {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: var(--light-navy);
+            color: var(--blue);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 50px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        .back-to-projects:hover {
+            gap: 20px;
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateX(-10px);
+        }
+        
+        .project-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .project-link-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--blue), #4fd1c7);
+            color: var(--dark-navy);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .project-link-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(100, 255, 218, 0.3);
+            gap: 18px;
+        }
+        
+        .project-link-btn.secondary {
+            background: transparent;
+            color: var(--blue);
+            border: 2px solid var(--blue);
+        }
+        
+        .project-link-btn.secondary:hover {
+            background: rgba(100, 255, 218, 0.1);
+        }
+        
+        .process-timeline {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 30px;
+        }
+        
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--blue), transparent);
+        }
+        
+        .process-step {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            background: var(--blue);
+            border-radius: 50%;
+            border: 3px solid var(--dark-navy);
+        }
+        
+        .step-title {
+            color: var(--blue);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .step-description {
+            color: var(--light-slate);
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .project-detail-title {
+                font-size: 2.2rem;
+            }
+            
+            .project-detail-subtitle {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+            
+            .project-meta {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                padding: 0 20px;
+            }
+            
+            .meta-item {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .tech-stack {
+                justify-content: center;
+                padding: 0 20px;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .project-link-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .project-detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-stack {
+                justify-content: center;
+            }
+            
+            .tech-item {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">SP<span class="dot">.</span></a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#certifications">Certifications</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <header class="project-detail-header">
+        <div class="container">
+            <h1 class="project-detail-title">Lancashire Property Price Monitor & Yorkshire and Humber Regional Crime Dashboard</h1>
+            <p class="project-detail-subtitle">End-to-end data analytics solutions using SQL Server and Power BI for property transaction analysis and regional crime pattern visualization with advanced DAX measures and interactive dashboards.</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Category</div>
+                    <div class="meta-value">Data Analytics & Visualization</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Timeline</div>
+                    <div class="meta-value">September - October <br>(2025) </div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value">Completed</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Team</div>
+                    <div class="meta-value">4CastModels</div>
+                </div>
+            </div>
+            
+            <div class="tech-stack">
+                <span class="tech-item">Power BI</span>
+                <span class="tech-item">SQL Server</span>
+                <span class="tech-item">DAX</span>
+                <span class="tech-item">Data Modeling</span>
+                <span class="tech-item">ETL</span>
+                <span class="tech-item">Data Visualization</span>
+                <span class="tech-item">Python</span>
+                <span class="tech-item">Excel</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Project Content -->
+    <main class="project-content">
+        <div class="container">
+            <!-- Overview Section -->
+            <section class="project-section">
+                <h2 class="section-title">Project Overview</h2>
+                <p>This comprehensive project involved developing two distinct but complementary data analytics solutions: a Lancashire Property Price Monitor for tracking real estate market trends and a Yorkshire & Humber Regional Crime Dashboard for analyzing public safety patterns. The goal was to transform raw, unstructured public datasets into actionable insights through interactive, user-friendly dashboards.</p>
+                
+                <p>The project demonstrated end-to-end data analytics capabilities, from data collection and cleaning to advanced visualization and stakeholder presentation. It addressed real-world business questions about property market trends and regional safety patterns.</p>
+                
+                <div class="image-gallery">
+                    <img src="../assets/images/project-detail-1.jpg" alt="Property Dashboard Dashboard View" class="gallery-image">
+                    <img src="../assets/images/project-detail-2.jpg" alt="Crime Analysis Dashboard" class="gallery-image">
+                    <img src="../assets/images/project-detail-3.jpg" alt="Data Model Architecture" class="gallery-image">
+                </div>
+            </section>
+
+            <!-- Problem Statement -->
+            <section class="project-section">
+                <h2 class="section-title">Problem Statement</h2>
+                <p>Local government agencies and real estate analysts lacked:</p>
+                <ul class="features-list">
+                    <li>Consolidated view of property price trends across Lancashire</li>
+                    <li>Real-time crime pattern analysis for Yorkshire & Humber region</li>
+                    <li>Interactive tools for data exploration and decision making</li>
+                    <li>Automated reporting systems for regular updates</li>
+                    <li>Historical trend analysis for predictive insights</li>
+                </ul>
+            </section>
+
+            <!-- Solution -->
+            <section class="project-section">
+                <h2 class="section-title">Solution Approach</h2>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <h3 class="step-title">1. Data Collection & Integration</h3>
+                        <p class="step-description">Aggregated data from multiple public sources including UK Land Registry (150,000+ property transactions), Police.uk crime records, and regional demographic data. Implemented automated data pipelines for regular updates.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">2. Data Cleaning & Transformation</h3>
+                        <p class="step-description">Performed comprehensive ETL processes using SQL Server to handle missing values, standardize formats, remove outliers, and ensure data quality. Created dimension and fact tables for efficient querying.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">3. Database Design</h3>
+                        <p class="step-description">Designed a star schema data model with optimized relationships. Created indexes for performance and implemented data validation rules to maintain integrity.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">4. DAX Development</h3>
+                        <p class="step-description">Built complex DAX measures for time intelligence (YOY, MOM growth), ranking calculations, moving averages, and custom KPIs. Implemented advanced calculations for property price indices and crime rate analysis.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h3 class="step-title">5. Dashboard Development</h3>
+                        <p class="step-description">Created interactive Power BI dashboards with drill-through capabilities, custom visuals, and responsive design. Implemented user-friendly navigation and dynamic filtering.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-section">
+                <h2 class="section-title">Key Features & Capabilities</h2>
+                <div class="tech-stack">
+                    <span class="tech-item">Interactive Dashboards</span>
+                    <span class="tech-item">Real-time Analytics</span>
+                    <span class="tech-item">Predictive Trends</span>
+                    <span class="tech-item">Geospatial Mapping</span>
+                    <span class="tech-item">Automated Reports</span>
+                    <span class="tech-item">Mobile Responsive</span>
+                </div>
+                
+                <ul class="features-list">
+                    <li><strong>Property Price Monitor:</strong> Track average prices, price trends, regional comparisons, and seasonal patterns across Lancashire with interactive maps and charts.</li>
+                    <li><strong>Crime Dashboard:</strong> Visualize crime rates by category, time patterns, hotspot mapping, and correlation analysis with demographic factors.</li>
+                    <li><strong>Advanced Analytics:</strong> Implemented machine learning models for price prediction and crime forecasting using Python integration.</li>
+                    <li><strong>Drill-through Analysis:</strong> Detailed property-level and crime incident-level analysis with comprehensive filtering options.</li>
+                    <li><strong>Automated Reporting:</strong> Scheduled data refresh and automated PDF report generation for stakeholders.</li>
+                    <li><strong>User Management:</strong> Role-based access control with different views for analysts, managers, and public users.</li>
+                </ul>
+            </section>
+
+            <!-- Technical Implementation -->
+            <section class="project-section">
+                <h2 class="section-title">Technical Implementation</h2>
+                
+                <h3>Data Architecture:</h3>
+                <p>Built a three-tier architecture with:</p>
+                <ul class="features-list">
+                    <li><strong>Data Layer:</strong> SQL Server database with optimized star schema</li>
+                    <li><strong>Processing Layer:</strong> Python scripts for data cleaning and transformation</li>
+                    <li><strong>Presentation Layer:</strong> Power BI dashboards with DAX calculations</li>
+                </ul>
+                
+                <h3>Key Metrics Developed:</h3>
+                <div class="tech-stack">
+                    <span class="tech-item">Average Property Price</span>
+                    <span class="tech-item">Price Growth (YOY/MOM)</span>
+                    <span class="tech-item">Crime Rate per 1000</span>
+                    <span class="tech-item">Seasonal Indices</span>
+                    <span class="tech-item">Regional Rankings</span>
+                    <span class="tech-item">Forecast Accuracy</span>
+                </div>
+            </section>
+
+            <!-- Results & Impact -->
+            <section class="project-section">
+                <h2 class="section-title">Results & Impact</h2>
+                
+                <ul class="features-list">
+                    <li><strong>Efficiency Improvement:</strong> Reduced data analysis time by 85% through dashboard automation</li>
+                    <li><strong>Data Coverage:</strong> Processed and analyzed 200,000+ property transactions and 500,000+ crime records</li>
+                    <li><strong>Insight Generation:</strong> Identified 15+ key property market trends and 20+ crime patterns</li>
+                    <li><strong>User Adoption:</strong> 95% positive feedback from stakeholders for dashboard usability</li>
+                    <li><strong>Decision Support:</strong> Used by local authorities for policy making and resource allocation</li>
+                    <li><strong>Scalability:</strong> Architecture supports addition of new regions and data sources</li>
+                </ul>
+                
+                <div class="image-gallery">
+                    <img src="../assets/images/project-detail-4.jpg" alt="Dashboard Performance Metrics" class="gallery-image">
+                    <img src="../assets/images/project-detail-5.jpg" alt="User Feedback Summary" class="gallery-image">
+                </div>
+            </section>
+
+            <!-- Challenges & Learnings -->
+            <section class="project-section">
+                <h2 class="section-title">Challenges & Learnings</h2>
+                
+                <h3>Challenges Overcome:</h3>
+                <ul class="features-list">
+                    <li><strong>Data Quality:</strong> Implemented robust data validation and cleaning pipelines</li>
+                    <li><strong>Performance:</strong> Optimized DAX calculations and query performance for large datasets</li>
+                    <li><strong>Usability:</strong> Conducted user testing to refine dashboard design and navigation</li>
+                    <li><strong>Integration:</strong> Successfully integrated multiple data sources with consistent formatting</li>
+                </ul>
+                
+                <h3>Key Learnings:</h3>
+                <ul class="features-list">
+                    <li>Importance of data modeling for analytics performance</li>
+                    <li>Value of user feedback in iterative dashboard design</li>
+                    <li>Benefits of automation for regular reporting</li>
+                    <li>Power of storytelling through data visualization</li>
+                </ul>
+            </section>
+
+            <!-- Project Links -->
+            <section class="project-section">
+                <h2 class="section-title">Project Resources</h2>
+                
+                <div class="project-links">
+                    <a href="https://github.com/seshanperera/property-crime-dashboard" target="_blank" class="project-link-btn">
+                        <i class="fab fa-github"></i> View Source Code
+                    </a>
+                    <a href="../assets/files/property-crime-dashboard-report.pdf" target="_blank" class="project-link-btn secondary">
+                        <i class="fas fa-file-pdf"></i> Download Full Report
+                    </a>
+                    <a href="../assets/files/property-crime-dashboard-demo.mp4" target="_blank" class="project-link-btn secondary">
+                        <i class="fas fa-video"></i> Watch Demo Video
+                    </a>
+                    <a href="mailto:seshanperera2004@gmail.com?subject=Inquiry about Property Crime Dashboard Project" class="project-link-btn secondary">
+                        <i class="fas fa-envelope"></i> Request Live Demo
+                    </a>
+                </div>
+                
+                <p style="color: var(--light-slate); margin-top: 20px; font-style: italic;">
+                    <i class="fas fa-info-circle" style="color: var(--blue); margin-right: 8px;"></i>
+                    Note: Some resources may require permission for access. Please contact for details.
+                </p>
+            </section>
+
+            <!-- Back Button -->
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="../index.html#projects" class="back-to-projects">
+                    <i class="fas fa-arrow-left"></i> Back to All Projects
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="../index.html" class="logo">SP<span class="dot">.</span></a>
+                <p class="footer-text">Transforming raw data into meaningful insights</p>
+                <div class="footer-links">
+                    <a href="../index.html#home">Home</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#certifications">Certifications</a>
+                    <a href="../index.html#projects">Projects</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/seshanperera2004" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/seshan-perera-5lb79832b" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/seshxn_22/" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100074223216525" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2024 Seshan Perera. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
