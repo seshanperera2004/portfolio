@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+  <!-- Circle background -->
+  <circle cx="32" cy="32" r="32" fill="#071826" />
+
+  <!-- Text logo -->
+  <text x="50%" y="50%" font-size="28" font-family="Poppins, sans-serif"
+        fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">
+    SP<tspan fill="#4EF0C3">.</tspan>
+  </text>
+</svg>
